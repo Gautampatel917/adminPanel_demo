@@ -1,0 +1,7 @@
+{
+    "php.files.exclude": [
+        "generated/**/*"
+    ],
+    "html.format.templating": true,
+    "php.suggest.basic": false
+}

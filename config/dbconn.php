@@ -5,9 +5,8 @@ define('DB_USERNAME', "root");
 define('DB_PASSWORD', "");
 define('DB_NAME', "masterControl");
 
-$conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_NAME);
+$conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-if(!$conn){
-    die('connection Failed: '. mysqli_connect_error());
+if (!$conn) {
+    die('connection Failed: ' . mysqli_connect_error());
 }
-?>

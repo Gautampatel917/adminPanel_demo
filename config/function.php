@@ -10,7 +10,6 @@ function validate($inputData){
     return trim($validatedData);
 }
 
-
 function redirect($url, $status){
         // echo "<script>alert('Please fill all fields')</script>";
         $_SESSION['status'] = $status;
@@ -86,6 +85,37 @@ function getById($tableName, $id){
         ];
         return $response;
     }
+}
+
+//delete query for user delete 
+
+function deleteQuery($tableName, $userId){
+    global $conn;
+    
+    $id = validate($userId);
+    $table = validate($tableName);
+    $query = "DELETE FROM $table WHERE id='$id'";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+
+//------------------- Over CRUD Operation ------------------------------
+
+function webSetting($columnName){
+    $setting = getById('settings',1);
+    
+    if ($setting['status'] == 200) {
+        return $setting['data'][$columnName]?? 'Device Services';
+    } else {
+        return 'Device Services';
+    }
+    //without return value we can't echo the value;
+}
+
+function logoutSession(){
+    unset($_SESSION['auth']);
+    unset($_SESSION['loggedInUserRole']);
+    unset($_SESSION['loggedInUser']);
 }
 
 ?>

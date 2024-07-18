@@ -1,65 +1,21 @@
 <?php
+require 'config/function.php';
 
-include('config/function.php');
-
-if(isset($_POST['saveUser'])){
+if (isset($_POST['enquireBtn'])) {
     $name = validate($_POST['name']);
+    $email = validate($_POST['email']);
     $phone = validate($_POST['phone']);
-    $email =validate($_POST['email']);
-    $password =validate($_POST['password']);
-    $is_ban =validate($_POST['is_ban']) == true ? 1 : 0;
-    $role =validate($_POST['role']);
+    $service = validate($_POST['service']);
+    $message = validate($_POST['message']);
 
-    if($name != '' || $phone != '' || $email != '' || $password != ''){
-        $query = "INSERT INTO users(name,phone,email,password,is_ban,role) 
-        VALUES ('$name','$phone','$email','$password','$is_ban','$role')";
+    $query = "INSERT INTO enquires(name, email, phone, service, message)
+            VALUES ('$name', '$email', '$phone', '$service', '$message')";
 
-        $result = mysqli_query($conn, $query);
+    $result = mysqli_query($conn, $query);
 
-        if($result){
-            redirect('users.php','User/Admin Added Successfully');
-        }
-        else{
-            redirect('users-create.php', 'Some went wrong!!!');
-        }
-    }
-    else{
-        redirect("users-create.php","Please fill the all the input fields");
+    if ($result) {
+        redirect('thank-you.php', 'Enquiry sent successfully. We will get back to you soon.');
+    } else {
+        redirect('thank-you.php', 'Something went wrong, try again later');
     }
 }
-
-//Edit user data
-
-if(isset($_POST['updateUser'])){
-    $name = validate($_POST['name']);
-    $phone = validate($_POST['phone']);
-    $email =validate($_POST['email']);
-    $password =validate($_POST['password']);
-    $is_ban =validate($_POST['is_ban']) == true ? 1 : 0;
-    $role =validate($_POST['role']);
-    $userId = validate($_POST['userId']);
-
-    if($name != '' || $phone != '' || $email != '' || $password != ''){
-        $query = "UPDATE users SET
-        name='$name',
-        phone='$phone',
-        email='$email',
-        password='$password',
-        is_ban='$is_ban',
-        role='$role' WHERE id='$userId'";
-
-        $result = mysqli_query($conn, $query);
-
-        if($result){
-            redirect('users.php','User/Admin updated Successfully');
-        }
-        else{
-            redirect('users.php', 'Some went wrong!!!');
-        }
-    }
-    else{
-        redirect("users-create.php","Please fill the all the input fields");
-    }
-}
-
-?>
